@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/graphql';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-dashboard',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [CommonModule, MatTableModule, TranslateModule],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.scss'
 })
