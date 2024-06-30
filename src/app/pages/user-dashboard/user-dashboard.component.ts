@@ -4,6 +4,8 @@ import { MatTableModule } from '@angular/material/table';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../models/graphql';
 import { TranslateModule } from '@ngx-translate/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -17,8 +19,11 @@ export class UserDashboardComponent {
   pageNumber: number = 1;
   users: User[] = [];
   activeUserId: string | null = null;
+  theme$: Observable<string>;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private store: Store<{ theme: string }>) {
+    this.theme$ = store.select('theme');
+  }
 
   ngOnInit(): void {
     this.usersService.getUsers('').then(users => {

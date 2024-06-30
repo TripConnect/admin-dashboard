@@ -1,3 +1,19 @@
+<div>
+    <span>Language: </span>
+    <select name="current-lang" id="current-lang" [(ngModel)]="selectedLang" (change)="switchLanguage()">
+        <option value="en">English</option>
+        <option value="vi">Vietnamese</option>
+    </select>
+</div>
+
+<div>
+    <span>Theme: </span>
+    <select name="current-theme" id="current-theme" [(ngModel)]="selectedTheme" (change)="switchTheme()">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</div>
+
 <app-user-dashboard></app-user-dashboard>
 
 <router-outlet />

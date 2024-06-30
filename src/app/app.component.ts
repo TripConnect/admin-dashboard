@@ -4,6 +4,10 @@ import { UserDashboardComponent } from './pages/user-dashboard/user-dashboard.co
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../translate-loader';
+import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { change } from './actions/theme.actions';
 
 @Component({
   selector: 'app-root',
@@ -13,21 +17,30 @@ import { HttpLoaderFactory } from '../translate-loader';
     HttpClientModule,
     UserDashboardComponent,
     TranslateModule,
+    FormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'admin-dashboard';
-  constructor(public translate: TranslateService) {
-    this.translate.addLangs(['en', 'vi']);
-    this.translate.setDefaultLang('en');
+  supported_langs: string[] = ['en', 'vi'];
+  selectedLang: string = 'en';
+  selectedTheme: string = 'light';
 
+  constructor(public translate: TranslateService, private store: Store<{ theme: string }>) {
+    this.translate.addLangs(this.supported_langs);
+    this.translate.setDefaultLang(this.selectedLang);
     const browserLang = translate.getBrowserLang() as string;
     this.translate.use(browserLang.match(/en|vi/) ? browserLang : 'en');
   }
 
-  switchLanguage(lang: string) {
-    this.translate.use(lang);
+  switchLanguage() {
+    this.translate.use(this.selectedLang);
   }
+
+  switchTheme() {
+    this.store.dispatch(change({theme: this.selectedTheme}));
+  }
+
 }
